@@ -2,9 +2,6 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +13,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    // @Autowired // 멤버서비스 생성할 때 컨테이너에 등록하고 생성하를 호출하는데 이 때 입력파라미터로 있는 멤버리포지토리를 컨테이너에서 가져와 넣어줌 => 1. 컴포넌트 스캔 방식
+    // @Autowired // 멤버서비스 생성할 때 컨테이너에 등록하고 생성자를 호출하는데 이 때 입력파라미터로 있는 멤버리포지토리를 컨테이너에서 가져와 넣어줌 => 1. 컴포넌트 스캔 방식
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }

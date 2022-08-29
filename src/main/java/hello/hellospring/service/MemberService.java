@@ -3,10 +3,13 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 //@Service // 스프링이 뜰 때 스프링 컨테이너에 멤버서비스 등록 @Component => 1. 컴포넌트 스캔 방식
+@Transactional // 스프링은 해당 클래스의 메서드를 실행할 때 트랜잭션을 시작하고, 메서드가 정상 종료되면 트랜잭션을 커밋한다. 만약 런타임 예외가 발생하면 롤백한다.
+// # JPA를 통한 모든 데이터 변경은 트랜잭션 안에서 실행해야 한다.
 public class MemberService {
 
     // ctrl+shift+t -> 테스트 신규

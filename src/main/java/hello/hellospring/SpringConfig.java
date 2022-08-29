@@ -1,6 +1,7 @@
 package hello.hellospring;
 
 import hello.hellospring.repository.JdbcMemberRepository;
+import hello.hellospring.repository.JpaMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.service.MemberService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 // 2. 자바 코드로 스프링 빈 구현 방식
@@ -17,10 +19,12 @@ import javax.sql.DataSource;
 public class SpringConfig {
 
     private DataSource dataSource;
+    private final EntityManager em; // JPA
 
     @Autowired
-    public SpringConfig(DataSource dataSource) {
+    public SpringConfig(DataSource dataSource, EntityManager em) {
         this.dataSource = dataSource;
+        this.em = em;
     }
 
     @Bean // 메소드 내의 로직을 호출하며 스프링 컨테이너에 스프링 빈으로 등록
@@ -31,6 +35,8 @@ public class SpringConfig {
     @Bean
     public MemberRepository memberRepository() {
 //      return new MemoryMemberRepository();
-        return new JdbcMemberRepository(dataSource); // 메모리 -> DB로 방식을 변경할 때, Config 코드만 수정할 수 있는 스프링의 장점!
+//      return new JdbcMemberRepository(dataSource); // 메모리 -> DB로 방식을 변경할 때, Config 코드만 수정할 수 있는 스프링의 장점!
+//      return new JdbcTemplateMemberRepository(dataSource);
+        return new JpaMemberRepository(em);
     }
 }

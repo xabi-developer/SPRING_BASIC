@@ -18,25 +18,38 @@ import javax.sql.DataSource;
 @Configuration // 스프링이 뜰 때 컨피규레이션 어노테이션을 읽고 하위에 @Bean이 있으면 스프링 빈에 등록
 public class SpringConfig {
 
-    private DataSource dataSource;
-    private final EntityManager em; // JPA
+    // 스프링 데이터 JPA 회원 리포지토리를 사용하도록 스프링 설정 변경
+    // 스프링 데이터 JPA가 SpringDataJpaMemberRepository 를 스프링 빈으로 자동 등록해준다.
+    private final MemberRepository memberRepository;
 
-    @Autowired
-    public SpringConfig(DataSource dataSource, EntityManager em) {
-        this.dataSource = dataSource;
-        this.em = em;
-    }
-
-    @Bean // 메소드 내의 로직을 호출하며 스프링 컨테이너에 스프링 빈으로 등록
-    public MemberService memberService() {
-        return new MemberService(memberRepository());
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean
-    public MemberRepository memberRepository() {
-//      return new MemoryMemberRepository();
-//      return new JdbcMemberRepository(dataSource); // 메모리 -> DB로 방식을 변경할 때, Config 코드만 수정할 수 있는 스프링의 장점!
-//      return new JdbcTemplateMemberRepository(dataSource);
-        return new JpaMemberRepository(em);
+    public MemberService memberService() {
+        return new MemberService(memberRepository);
     }
+
+//    private DataSource dataSource;
+//    private final EntityManager em; // JPA
+//
+//    @Autowired
+//    public SpringConfig(DataSource dataSource, EntityManager em) {
+//        this.dataSource = dataSource;
+//        this.em = em;
+//    }
+//
+//    @Bean // 메소드 내의 로직을 호출하며 스프링 컨테이너에 스프링 빈으로 등록
+//    public MemberService memberService() {
+//        return new MemberService(memberRepository());
+//    }
+//
+//    @Bean
+//    public MemberRepository memberRepository() {
+////      return new MemoryMemberRepository(); // 메모리
+////      return new JdbcMemberRepository(dataSource); // JDBC
+////      return new JdbcTemplateMemberRepository(dataSource); // JDBC Template
+//        return new JpaMemberRepository(em); // JPA
+//    } // 메모리 -> DB로 방식을 변경할 때, Config 코드만 수정할 수 있는 스프링의 장점!
 }

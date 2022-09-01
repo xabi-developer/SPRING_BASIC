@@ -1,5 +1,6 @@
 package hello.hellospring;
 
+import hello.hellospring.aop.TimeTraceAop;
 import hello.hellospring.repository.JdbcMemberRepository;
 import hello.hellospring.repository.JpaMemberRepository;
 import hello.hellospring.repository.MemberRepository;
@@ -17,6 +18,8 @@ import javax.sql.DataSource;
 
 @Configuration // 스프링이 뜰 때 컨피규레이션 어노테이션을 읽고 하위에 @Bean이 있으면 스프링 빈에 등록
 public class SpringConfig {
+
+
 
     // 스프링 데이터 JPA 회원 리포지토리를 사용하도록 스프링 설정 변경
     // 스프링 데이터 JPA가 SpringDataJpaMemberRepository 를 스프링 빈으로 자동 등록해준다.

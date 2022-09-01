@@ -21,10 +21,11 @@ class MemberServiceIntegrationTest {
     @Autowired MemberRepository memberRepository; // JdbcMemberRepository
 
     @Test
-    @Commit // DB 실제 커밋 실행 (클래스 어노테이션의 트랜잭셔널 붙여도 커밋 실행)
+    // @Commit // DB 실제 커밋 실행 (클래스 어노테이션의 트랜잭셔널 붙여도 커밋 실행)
     void 회원가입() {
         //given
         Member member = new Member();
+
         member.setName("spring");
 
         //when
